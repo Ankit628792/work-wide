@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios";
 
 // axios.defaults.baseURL = 'http://localhost:3000/api';
-axios.defaults.baseURL = 'http://10.0.2.2:3000/api';
+axios.defaults.baseURL = 'https://cornerqube-backend-9imbl.ondigitalocean.app/api';
 
 const routes = {
     auth: '/auth',
