@@ -11,7 +11,7 @@ export default function Home() {
     const fetchEmployeeDetails = async (token) => {
         setLoading(true)
         try {
-            let res = await fetch(`/api/qr/verify`, { headers: { Authorization: `Bearer ${token}` } })
+            let res = await fetch(`https://cornerqube-backend-9imbl.ondigitalocean.app/api/work-wide/qr/verify`, { headers: { Authorization: `Bearer ${token}` } })
             res = await res.json();
             if (res.success) {
                 setEmployee({ ...res.data, entryTime: new Date().toISOString() })
@@ -30,7 +30,7 @@ export default function Home() {
                 <div className='text-blue-900 flex-grow max-w-3xl'>
                     {
                         loading ?
-                            <h1 className='text-3xl font-medium text-blue-900'>Loading</h1> :
+                            <h1>Loading</h1> :
                             error ?
                                 <h1>{error}</h1>
                                 :
@@ -91,3 +91,10 @@ export default function Home() {
     )
 }
 
+export async function getServerSideProps() {
+    return {
+        props: {
+            data: 'hello'
+        }
+    }
+}
