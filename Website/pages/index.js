@@ -30,7 +30,7 @@ export default function Home() {
                 <div className='text-blue-900 flex-grow max-w-3xl'>
                     {
                         loading ?
-                            <h1>Loading</h1> :
+                            <h1 className='text-3xl font-medium text-blue-900'>Loading</h1> :
                             error ?
                                 <h1>{error}</h1>
                                 :
@@ -91,12 +91,3 @@ export default function Home() {
     )
 }
 
-export async function getServerSideProps() {
-    // let data1 = await fetch(`http://localhost:3000/api/generateQR`, { method: 'GET', headers: { 'Authorization': 'Bearer bjhvgh,vghvg' } }).then(res => res.json())
-    // console.log(data1)
-    return {
-        props: {
-            data: 'hello'
-        }
-    }
-}
