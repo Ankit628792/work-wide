@@ -17,7 +17,7 @@ const Home = ({ setScreen }) => {
     }, []);
 
     useEffect(() => {
-        setTimeout(() => setValid(false), 10000);
+        setTimeout(() => setValid(false), 600000);
     }, [passKey])
 
     const generateCode = async () => {

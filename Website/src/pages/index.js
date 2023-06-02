@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import moment from 'moment/moment';
+import Router from 'next/router';
+import PageLoader from '../components/PageLoader';
 
 export default function Home() {
-    const [data, setData] = useState('No result');
+    const [pageLoading, setPageLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('')
     const [employee, setEmployee] = useState()
@@ -24,6 +26,21 @@ export default function Home() {
         }
         setLoading(false)
     }
+
+    const checkUser = async () => {
+        let res = await fetch(`https://cornerqube-backend-9imbl.ondigitalocean.app/api/work-wide/auth`, { headers: { Authorization: `Bearer ${localStorage?.getItem('app_token') || ''}` } }).then(res => res.json())
+        if (res.success) {
+            localStorage.setItem('app_token', res.token);
+            setTimeout(() => setPageLoading(false), 2000);
+        }
+        else {
+            Router.push('/login')
+        }
+    }
+
+    useEffect(() => { checkUser() }, [])
+
+    if (pageLoading) return <PageLoader />
     return (
         <>
             <main className="flex flex-grow items-center w-full bg-blue-100 py-5 px-10 2xl:px-20 gap-10">
@@ -77,7 +94,6 @@ export default function Home() {
                         <QrReader
                             onResult={(result, error) => {
                                 if (!!result) {
-                                    setData(result?.text);
                                     fetchEmployeeDetails(result?.text)
                                 }
                             }}
@@ -89,12 +105,4 @@ export default function Home() {
             </main>
         </>
     )
-}
-
-export async function getServerSideProps() {
-    return {
-        props: {
-            data: 'hello'
-        }
-    }
 }
