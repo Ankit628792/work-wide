@@ -16,7 +16,7 @@ export default function Home() {
             let res = await fetch(`https://cornerqube-backend-9imbl.ondigitalocean.app/api/work-wide/qr/verify`, { headers: { Authorization: `Bearer ${token}` } })
             res = await res.json();
             if (res.success) {
-                setEmployee({ ...res.data, entryTime: new Date().toISOString() })
+                setEmployee(res.data)
             }
             else {
                 setError(res.message)
